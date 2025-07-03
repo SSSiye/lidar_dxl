@@ -31,6 +31,7 @@ sub_wsl.cpp: WSL 환경에서 해당 토픽을 구독하여 이미지 수신/ Op
 <br/>
 참고유튜브 링크: https://www.youtube.com/watch?v=HvWfm4Xtzbs
 <br/>
-![이미지 2025  7  3  오후 1 47](https://github.com/user-attachments/assets/a574db22-541b-42ce-9392-30ec2be60aea)
+
+![이미지 2025  7  3  오후 1 47](https://github.com/user-attachments/assets/78f5aed5-302a-4c35-a393-1f91ba82dd52)
 
 
