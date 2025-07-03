@@ -1,63 +1,13 @@
-# camera
-ros2 test package for CSI camera on Jetson nano
-
-dependency : ros2 foxy, gstreamer, opencv 4.8, cmake 3.16
-
-Publisher node captures an image from csi camera via gstreamer and publishes a compressed image topic with jpg format using a ros2 interface sensor_msgs/msg/CompressedImage.
-Subscriber node subscribes the compressed image topic and sends it to PC via gstreamer.
-
-Open linux terminal on Jetson nano
-
-$ cd ~/ros2_ws/src
-
-$ git clone https://github.com/2sungryul/camera.git
-
-Make sure you need to change the ip address in sub.cpp to that of your own PC.
-
-$ cd ~/ros2_ws
-
-$ colcon build --symlink-install --packages-select camera
-
-$ source install/local_setup.bash
-
-$ ros2 run camera pub
-
-Open new linux terminal on Jetson nano
-
-$ ros2 run camera sub_jetson
-
-Open windows powershell on PC
-
-PS> gst-launch-1.0 -v udpsrc port=8001 ! ‘application/x-rtp,encoding-name=(string)H264,payload=(int)96’ ! rtph264depay ! queue ! avdec_h264 ! videoconvert! autovideosink
-
-![image](https://github.com/2sungryul/camera/assets/67367753/61171e79-f093-441a-ad77-ae4f7b8adc19)
-
-Open linux terminal on WSL2
-
-$ cd ~/ros2_ws/src
-
-$ git clone https://github.com/2sungryul/camera.git
-
-$ cd ~/ros2_ws
-
-$ colcon build --symlink-install --packages-select camera
-
-$ source install/local_setup.bash
-
-$ ros2 run camera sub_wsl
-
-![image](https://github.com/2sungryul/camera/assets/67367753/6f54ffa5-abcf-4848-95ed-68e45e195c46)
-
-Gstreamer command for video streaming from csi camera on Linux 
-
-$ gst-launch-1.0 nvarguscamerasrc sensor-id=0 ! 'video/x-raw(memory:NVMM),format=NV12,width=640,height=360' ! nvvidconv flip-method=0 ! nvv4l2h264enc insert-sps-pps=true ! h264parse ! rtph264pay pt=96 ! udpsink host=203.234.58.121 port=8001 sync=false -q
-
-How to create Virtual Switch using Hyper-V 
-
-![image](https://github.com/2sungryul/camera/assets/67367753/273c7a3c-af2d-40ac-a0fe-ae18f5b98443)
-
-How to create .wslconfig for WSL2 
-
-![image](https://github.com/2sungryul/camera/assets/67367753/1bf746e9-707b-416a-9987-02c689287da6)
+# 장애물 회피 알고리즘
+스캔영상(로봇중심으로 반경1m내의 장애물만 표시)을 만들고 영상의 전방 180도 영역에서 장애물을 위치를 인식 
+<br/>-> 좌측 ½영역에서 최단거리 장애물 검출
+<br/>-> 우측1/2영역에서 최단거리 장애물 검출
+<br/>-> 2개의 최단거리 장애물의 중앙방향을 구함
+<br/>-> 로봇 정면방향과 각도 차이를 에러(부호있는 정수)로 정의함
+<br/>
+![이미지 2025  7  3  오후 1 43](https://github.com/user-attachments/assets/bc6b2b0e-25ee-48d2-b69e-f72cb4a86a68)
+<br/>
+참고유튜브 링크: https://www.youtube.com/watch?v=HvWfm4Xtzbs
+![이미지 2025  7  3  오후 1 47](https://github.com/user-attachments/assets/a574db22-541b-42ce-9392-30ec2be60aea)
 
 
